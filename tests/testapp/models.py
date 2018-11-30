@@ -1,4 +1,5 @@
 from django.db import models
+
 from django_fsm import FSMField, FSMKeyField, transition
 
 
@@ -39,7 +40,8 @@ class FKApplication(models.Model):
     Student application need to be approved by dept chair and dean.
     Test workflow for FSMKeyField
     """
-    state = FSMKeyField('testapp.DbState', default='new')
+    state = FSMKeyField('testapp.DbState', default='new',
+                        on_delete=models.CASCADE)
 
     @transition(field=state, source='new', target='draft')
     def draft(self):
